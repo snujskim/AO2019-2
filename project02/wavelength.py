@@ -130,8 +130,8 @@ FWHM_ID = 2.5 # rough guess of FWHM of lines in IDENTIFY (pixels)
 
 # Parameters for REIDENTIFY
 FITTING_MODEL_REID = 'Chebyshev' # 2-D fitting function
-ORDER_SPATIAL_REID = 6
-ORDER_WAVELEN_REID = 6
+ORDER_SPATIAL_REID = 5
+ORDER_WAVELEN_REID = 5
 STEP_REID = 10  # Reidentification step size in pixels (spatial direction)
 NSUM_REID = 10
 TOL_REID = 5 # tolerence to lose a line in pixels
@@ -148,7 +148,7 @@ SIGMA_APSKY = 3
 ITERS_APSKY = 5
 ## parameters for aperture tracing
 FITTING_MODEL_APTRACE = 'Chebyshev'
-ORDER_APTRACE = 5
+ORDER_APTRACE = 7
 SIGMA_APTRACE = 3
 ITERS_APTRACE = 5 
 # The fitting is done by SIGMA_APTRACE-sigma ITERS_APTRACE-iters clipped on the
