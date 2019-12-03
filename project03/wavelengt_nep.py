@@ -883,8 +883,12 @@ plt.show()
 
 
 #albedo - distance, phase angle(6) - cross section area maybe slit size(0.8) is smaller (3.74)
-#pattern-matching
+#pattern-matching (identification)
 #uranus spectrum
+#broadening - rotational speed
+#past data
+
+#after 8000 it may be second order
 #%%
 ffinal
 #np.shape(ffinal)
@@ -937,17 +941,85 @@ plt.show()
 #%matplotlib inline
 #%matplotlib auto
 
-print(peak_pix)
-
+print(app_wavelen)
 
 #%%
-app_wavelen
-peak_pix
-x_identify
-#lamphdu[0].data
-#np.shape(fffinal)
-#max_intens
-#identify_1
+#from skimage.feature import peak_local_max
+#from scipy.optimize import curve_fit
+
+MINSEP_PK = 20   # minimum separation of peaks
+MINAMP_PK = 0.05 # fraction of minimum amplitude (wrt maximum) to regard as peak
+NMAX_PK = 20
+NSUM_ID = 10
+    
+max_intens = np.max(ffinal)
+
+    #NMAX_PK = 15\n
+    #MINAMP_PK = 0.04
+min_peak_pix= peak_local_max(max_intens-ffinal, indices=True, num_peaks=NMAX_PK,
+                          min_distance=MINSEP_PK)
+
+peak_pix1 = peak_local_max(ffinal, indices=True, num_peaks=NMAX_PK,
+                             min_distance=MINSEP_PK)
+                             #threshold_abs=max_intens * MINAMP_PK)
+
+fig = plt.figure(dpi=100)
+ax = fig.add_subplot(111)
+
+ax.plot(ap_wavelen, ffinal, lw=1)
+ax.set_xlim(4000,)
+ax.set_ylim( (np.percentile(ffinal,2),np.percentile(ffinal,99)))
+
+for i in min_peak_pix:
+    ax.plot((ap_wavelen[i]-0.01*max_intens,ap_wavelen[i]-0.005*max_intens),
+           (ffinal[i]-0.01*max_intens, ffinal[i]-0.005*max_intens), color='r', ls='-', lw=1)
+    plt.show()
+    for i in peak_pix1:
+        ax.plot((ap_wavelen[i]+0.005*max_intens,ap_wavelen[i]+0.01*max_intens),
+                (ffinal[i]+0.005*max_intens, ffinal[i]+0.01*max_intens), color='r', ls='-', lw=0.1)
+    
+#%%
+print(peak_pix1)
+print('a')
+print(min_peak_pix)
+
+#%%
+for i in min_peak_pix:
+    app_wavelen = ap_wavelen[i]
+    print(app_wavelen)
+
+#CH4 bands / (4000~8000)
+#4060
+#4200
+#4410
+#4600
+#4660
+#4860
+#5100
+#5220
+#5430 - 5432.73
+#5570
+#5760 - 5759.06
+#5960 - 5964.11
+#6190 - 6191.12
+#6430 
+#6670 - 6680.17 (some sources call 6680)
+#6830
+#7020 - 7021.12
+#7270 - 7275.20
+#7840 - 7838.77
+#7980
+#8420
+#8640
+#8870
+#9130
+#9480
+#9520
+#9710
+#9890
+ #7931.67
+ #7604.87
+
 #%%
 from astroquery.jplspec import JPLSpec
 
